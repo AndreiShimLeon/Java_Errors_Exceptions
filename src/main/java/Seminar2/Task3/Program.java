@@ -1,4 +1,4 @@
-package Seminar2;
+package Seminar2.Task3;
 
 import java.io.FileReader;
 import java.sql.PreparedStatement;
@@ -6,37 +6,33 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Program {
-    public static void main(String[] args) {
-        HashMap<String, String> source = new HashMap<>();
-        source.put("Анна", "4");
-        source.put("Владимир", "?");
-        source.put("Константин", "?");
-
-        HashMap<String, Integer> result = replace(source);
-        System.out.println(result);
-
-
-    }
-
-    public static HashMap<String, Integer> replace(HashMap<String, String> source){
-        HashMap<String, Integer> result = new HashMap<>();
-        for (String key: source.keySet()){
-            if(source.get(key).equals("?")){
-                int temp = key.length();
-                result.put(key, temp);
-            } else {
-                result.put(key, Integer.parseInt(source.get(key)));
+    public static Integer sum2d(String[][] arr) { //Integer вместо int для считывания null
+        int sum = 0;
+        try {
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = 0; j < arr[i].length; j++) { //исключение IndexOutOfBoundsException можно не отлавливать, если указать arr[i].length
+                    try {
+                        int val = Integer.parseInt(arr[i][j]);
+                        sum += val;
+                    } catch (NumberFormatException e){ //важно указать здесь, чтобы учесть битые значения
+                        System.out.println("Обнаружено битое значение с индексом " + i + ", " + j);
+                    }
+                }
             }
-            };
-        return result;
+            return sum;
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Размер массива меньше 5");
+        } catch (NullPointerException e){
+            System.out.println("Не передан массив");
+        }
+        return null; //нужна другая реализация ошибки!
+    }
+    public static void main(String[] args) {
+        String [][] test = new String[][] { {"1", "2", "парр", "куеу", "5", "6"},
+                {"1", "2", "3", "4", "5"},
+                {"1", "2", "3", "4", "5", "1"}};
+        System.out.println(sum2d(test));
+        //System.out.println(sum2d(null)); //для обработки NullPointer
     }
 
-    public static HashMap<String, String> parseStringArray(String[] array){
-        HashMap<String, String> result = new HashMap<>();
-        for (int i = 0; i < array.length; i++) {
-            String[] temp = array[i].split("=");
-            result.put(temp[0], temp[1]);
-        }
-        return result;
-    }
 }

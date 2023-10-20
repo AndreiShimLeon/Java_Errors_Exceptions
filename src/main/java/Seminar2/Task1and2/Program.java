@@ -1,4 +1,4 @@
-package Seminar2.Task1;
+package Seminar2.Task1and2;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
